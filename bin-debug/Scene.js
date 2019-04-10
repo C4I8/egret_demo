@@ -24,6 +24,9 @@ var Scene = (function (_super) {
     Scene.prototype.childrenCreated = function () {
         this.initEvent();
     };
+    /**
+    * 初始化界面
+    */
     Scene.prototype.initUI = function () {
         var bg = new eui.Rect();
         this.addChild(bg);
@@ -45,11 +48,19 @@ var Scene = (function (_super) {
         this.addChild(unOptimizeBtn);
         unOptimizeBtn.verticalCenter = 250;
         unOptimizeBtn.left = 100;
+        var cannon = new Cannon();
+        this.addChild(cannon);
+        cannon.x = (this.width - cannon.width) / 2;
+        cannon.y = this.height - cannon.height;
         this.addBtn = addBtn;
         this.remBtn = remBtn;
         this.optimizeBtn = optimizeBtn;
         this.unOptimizeBtn = unOptimizeBtn;
+        this.cannon = cannon;
     };
+    /**
+    * 创建一个简单的按钮
+    */
     Scene.prototype.createBtn = function (text) {
         var addBtn = new eui.Component();
         var addBg = new eui.Rect();
@@ -66,12 +77,23 @@ var Scene = (function (_super) {
         addTxt.horizontalCenter = addTxt.verticalCenter = 0;
         return addBtn;
     };
+    /**
+    * 初始化时间监听
+    */
     Scene.prototype.initEvent = function () {
+        this.addEventListener(egret.Event.RESIZE, this.onResieze, this);
         this.addBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.addBlocks, this);
         this.remBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.removeBlocks, this);
         this.optimizeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.optimze, this);
         this.unOptimizeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.unOptimze, this);
     };
+    Scene.prototype.onResieze = function () {
+        this.cannon.x = (this.width - this.cannon.width) / 2;
+        this.cannon.y = this.height - this.cannon.height;
+    };
+    /**
+    * 添加小方块
+    */
     Scene.prototype.addBlocks = function (e, num, side, alpha) {
         if (num === void 0) { num = 10; }
         if (side === void 0) { side = 2; }
@@ -90,6 +112,9 @@ var Scene = (function (_super) {
         }
         console.log(this.blocks.length);
     };
+    /**
+    * 移除小方块
+    */
     Scene.prototype.removeBlocks = function (e, num) {
         if (num === void 0) { num = 10; }
         for (var i = 0; i < num; i++) {

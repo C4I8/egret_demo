@@ -11,6 +11,7 @@ class Scene extends eui.Component{
 	public remBtn:eui.Component;
 	public optimizeBtn:eui.Component;
 	public unOptimizeBtn:eui.Component;
+	public cannon:Cannon;
 
 	public stretch(__this){
 		__this.top = __this.right = __this.bottom = __this.left = 0;
@@ -18,6 +19,9 @@ class Scene extends eui.Component{
 	public childrenCreated(){	
 		this.initEvent();
 	}
+	/**
+	* 初始化界面
+	*/
 	public initUI(){
 		var bg:eui.Rect = new eui.Rect();
 		this.addChild(bg);
@@ -44,11 +48,20 @@ class Scene extends eui.Component{
 		unOptimizeBtn.verticalCenter = 250;
 		unOptimizeBtn.left = 100;
 
+		var cannon:Cannon = new Cannon();
+		this.addChild(cannon);
+		cannon.x = (this.width - cannon.width) / 2;
+		cannon.y = this.height - cannon.height;
+
 		this.addBtn = addBtn;
 		this.remBtn = remBtn;
 		this.optimizeBtn = optimizeBtn;
 		this.unOptimizeBtn = unOptimizeBtn;
+		this.cannon = cannon;
 	}
+	/**
+	* 创建一个简单的按钮
+	*/
 	public createBtn(text:string):eui.Component{
 		var addBtn:eui.Component = new eui.Component();
 		var addBg:eui.Rect = new eui.Rect();
@@ -65,12 +78,24 @@ class Scene extends eui.Component{
 		addTxt.horizontalCenter = addTxt.verticalCenter = 0;
 		return addBtn;
 	}
+	/**
+	* 初始化时间监听
+	*/
 	public initEvent(){
+		this.addEventListener(egret.Event.RESIZE,this.onResieze,this);
 		this.addBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.addBlocks,this);
 		this.remBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.removeBlocks,this);
 		this.optimizeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.optimze,this);
 		this.unOptimizeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.unOptimze,this);
+
 	}
+	public onResieze(){
+		this.cannon.x = (this.width - this.cannon.width) / 2;
+		this.cannon.y = this.height - this.cannon.height;
+	}
+	/**
+	* 添加小方块
+	*/
 	public addBlocks(e:egret.Event,num:number=10,side:number=2,alpha:number=1){
 		var time = 2e3;
 		for(let i = 0;i<num;i++){
@@ -86,7 +111,9 @@ class Scene extends eui.Component{
 		}
 		console.log(this.blocks.length);
 	}
-
+	/**
+	* 移除小方块
+	*/
 	public removeBlocks(e:egret.Event,num:number = 10){
 		for(let i = 0;i<num;i++){
 			let block = this.blocks.shift();
@@ -96,7 +123,6 @@ class Scene extends eui.Component{
 			}
 		}
 	}
-
 	public optimze(){
 		var blocks = this.blocks;
 		for(let i in blocks){
