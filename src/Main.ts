@@ -35,6 +35,7 @@ class Main extends eui.UILayer {
 
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
+            console.log(context);
         })
 
         egret.lifecycle.onPause = () => {
@@ -42,7 +43,7 @@ class Main extends eui.UILayer {
         }
 
         egret.lifecycle.onResume = () => {
-            egret.ticker.resume();
+            // egret.ticker.resume();
         }
 
         //inject the custom material parser
@@ -53,7 +54,6 @@ class Main extends eui.UILayer {
 
 
         this.runGame().catch(e => {
-            console.log(e);
         })
     }
 

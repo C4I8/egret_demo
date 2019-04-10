@@ -80,12 +80,13 @@ var Main = (function (_super) {
         _super.prototype.createChildren.call(this);
         egret.lifecycle.addLifecycleListener(function (context) {
             // custom lifecycle plugin
+            console.log(context);
         });
         egret.lifecycle.onPause = function () {
             // egret.ticker.pause();
         };
         egret.lifecycle.onResume = function () {
-            egret.ticker.resume();
+            // egret.ticker.resume();
         };
         //inject the custom material parser
         //注入自定义的素材解析器
@@ -93,7 +94,6 @@ var Main = (function (_super) {
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
         this.runGame().catch(function (e) {
-            console.log(e);
         });
     };
     Main.prototype.runGame = function () {

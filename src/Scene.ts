@@ -24,71 +24,23 @@ class Scene extends eui.Component{
 		bg.fillColor = 0x0076A3;
 		this.stretch(bg);
 
-		var addBtn:eui.Component = new eui.Component();
-		var addBg:eui.Rect = new eui.Rect();
-		var addTxt:eui.Label = new eui.Label();;
+		var addBtn:eui.Component = this.createBtn('添加Blocks*10');
 		this.addChild(addBtn);
-		addBtn.addChild(addBg);
-		addBtn.addChild(addTxt);
-		this.stretch(addBg);
-		addBg.width = 200;
-		addBg.height = 40;
-		addTxt.text = "添加Blocks*10";
-		addTxt.textColor = 0xFFFFFF;
-		addTxt.textAlign = "center";
-		addTxt.verticalAlign = "middle";
-		addTxt.horizontalCenter = addTxt.verticalCenter = 0;
 		addBtn.verticalCenter = -50;
 		addBtn.left = 100;
 
-		var remBtn:eui.Component = new eui.Component();
-		var remBg:eui.Rect = new eui.Rect();
-		var remTxt:eui.Label = new eui.Label;
+		var remBtn:eui.Component = this.createBtn('移除Blocks*10');
 		this.addChild(remBtn);
-		remBtn.addChild(remBg);
-		remBtn.addChild(remTxt);
-		this.stretch(remBg);
-		remBg.width = 200;
-		remBg.height = 40;
-		remTxt.text = "移除Blocks*10";
-		remTxt.textColor = 0xFFFFFF;
-		remTxt.textAlign = "center";
-		remTxt.verticalAlign = "middle";
-		remTxt.horizontalCenter = remTxt.verticalCenter = 0;
 		remBtn.verticalCenter = 50;
 		remBtn.left = 100;
 
-		var optimizeBtn:eui.Component = new eui.Component();
-		var optimizeBg:eui.Rect = new eui.Rect();
-		var optimizeTxt:eui.Label = new eui.Label;
+		var optimizeBtn:eui.Component = this.createBtn('OPTIMIZE');
 		this.addChild(optimizeBtn);
-		optimizeBtn.addChild(optimizeBg);
-		optimizeBtn.addChild(optimizeTxt);
-		this.stretch(optimizeBg);
-		optimizeBg.width = 200;
-		optimizeBg.height = 40;
-		optimizeTxt.text = "OPTIMIZE";
-		optimizeTxt.textColor = 0xFFFFFF;
-		optimizeTxt.textAlign = "center";
-		optimizeTxt.verticalAlign = "middle";
-		optimizeTxt.horizontalCenter = optimizeTxt.verticalCenter = 0;
 		optimizeBtn.verticalCenter = 150;
 		optimizeBtn.left = 100;
 
-		var unOptimizeBtn:eui.Component = new eui.Component();
-		var unOptimizeBg:eui.Rect = new eui.Rect();
-		var unOptimizeTxt:eui.Label = new eui.Label;
+		var unOptimizeBtn:eui.Component = this.createBtn('UNOPTIMIZE');
 		this.addChild(unOptimizeBtn);
-		unOptimizeBtn.addChild(unOptimizeBg);
-		unOptimizeBtn.addChild(unOptimizeTxt);
-		this.stretch(unOptimizeBg);
-		unOptimizeBg.width = 200;
-		unOptimizeBg.height = 40;
-		unOptimizeTxt.text = "UNOPTIMIZE";
-		unOptimizeTxt.textColor = 0xFFFFFF;
-		unOptimizeTxt.textAlign = "center";
-		unOptimizeTxt.verticalAlign = "middle";
-		unOptimizeTxt.horizontalCenter = unOptimizeTxt.verticalCenter = 0;
 		unOptimizeBtn.verticalCenter = 250;
 		unOptimizeBtn.left = 100;
 
@@ -96,6 +48,22 @@ class Scene extends eui.Component{
 		this.remBtn = remBtn;
 		this.optimizeBtn = optimizeBtn;
 		this.unOptimizeBtn = unOptimizeBtn;
+	}
+	public createBtn(text:string):eui.Component{
+		var addBtn:eui.Component = new eui.Component();
+		var addBg:eui.Rect = new eui.Rect();
+		var addTxt:eui.Label = new eui.Label();
+		addBtn.addChild(addBg);
+		addBtn.addChild(addTxt);
+		this.stretch(addBg);
+		addBg.width = 200;
+		addBg.height = 40;
+		addTxt.text = text;
+		addTxt.textColor = 0xFFFFFF;
+		addTxt.textAlign = "center";
+		addTxt.verticalAlign = "middle";
+		addTxt.horizontalCenter = addTxt.verticalCenter = 0;
+		return addBtn;
 	}
 	public initEvent(){
 		this.addBtn.addEventListener(egret.TouchEvent.TOUCH_TAP,this.addBlocks,this);
@@ -140,8 +108,8 @@ class Scene extends eui.Component{
 	public unOptimze(){
 		var blocks = this.blocks;
 		for(let i in blocks){
-			// blocks[i].alpha = 0.5;
-			// blocks[i].scaleX = blocks[i].scaleY = 10;
+			blocks[i].alpha = 0.5;
+			blocks[i].scaleX = blocks[i].scaleY = 5;
 			blocks[i].rotation = 45;
 		}
 	}
